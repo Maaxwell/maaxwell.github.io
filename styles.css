@@ -38,11 +38,75 @@ html, body {
     align-items: center;
 }
 
+/* Stack title, toggle and nav vertically */
 .header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;            /* space between title, toggle and nav */
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Desktop: ensure nav is visible under the title */
+@media (min-width: 769px) {
+  .menu {
+    position: static;
+    display: block;
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu ul {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu a {
+    padding: 6px 0;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  .menu-toggle { display: none; } /* hide burger on desktop */
+}
+
+/* Mobile: keep the dropdown/toggle behavior */
+@media (max-width: 768px) {
+  .menu {
+    display: none;            /* hidden by default on mobile */
+    position: absolute;
+    top: 60px;
+    left: 16px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 8px;
+  }
+  .menu.active { display: block; }
+
+  .menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu a {
+    padding: 8px 12px;
+  }
+
+  .menu-toggle { display: inline-flex; } /* make sure burger is visible */
 }
 
 .name {
