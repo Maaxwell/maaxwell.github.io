@@ -40,8 +40,8 @@ html, body {
 /* Sidebar font settings (customize values below) */
 :root {
   --sidebar-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --sidebar-title-size: 3rem; /* ~24px */
-  --sidebar-link-size: 2rem; /* ~15px */
+  --sidebar-title-size: 4rem; /* ~24px */
+  --sidebar-link-size: 3rem; /* ~15px */
   --sidebar-link-weight: 400;
   --sidebar-title-weight: 400;
 }
