@@ -1,95 +1,32 @@
-/* DESKTOP LAYOUT — two columns, landscape side-by-side */
+/* DESKTOP: enforce two-column gallery and prevent items from expanding full-width */
 @media (min-width: 769px) {
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: var(--sidebar-width);
-    height: 100vh;
-    flex-direction: column;
-    border-bottom: none;
-    border-right: 1px solid #eee;
-    padding: 40px 24px;
-    overflow-y: auto;
-  }
-
-  .header-content {
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .name {
-    font-size: 24px;
-    margin-bottom: 32px;
-  }
-
-  .menu-toggle {
-    display: none;
-  }
-
-  .menu {
-    position: static;
-    display: block;
-    background: none;
-    border: none;
-    box-shadow: none;
-    margin-top: 0;
-  }
-
-  .menu ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .menu li {
-    border-bottom: none;
-    margin-bottom: 8px;
-  }
-
-  .menu a {
-    padding: 0;
-    font-size: 14px;
-    color: #666;
-  }
-
-  .menu a:hover,
-  .menu a.active {
-    background: none;
-    color: #000;
-  }
-
   .content {
-    margin-left: var(--sidebar-width);
-    margin-top: 0;
-    padding: 40px;
+    margin-left: calc(var(--sidebar-width) + 24px) !important;
   }
 
-  /* TWO-COLUMN GALLERY */
-  :root { --gap: 12px; }              /* adjust global gap if desired */
   .gallery {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap);
-    align-items: start;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    grid-auto-rows: 320px !important;        /* adjust tile height as needed */
+    align-items: start !important;
+    width: auto !important;
+    max-width: calc(100% - (var(--sidebar-width) + 48px)) !important;
   }
 
-  /* Make all items occupy a single column so they sit side-by-side */
-  .gallery-item.landscape,
-  .gallery-item.portrait {
-    grid-column: auto;
+  .gallery-item {
+    width: auto !important;                  /* let the grid set the column width */
+    min-width: 0 !important;                 /* allow items to shrink inside grid columns */
+    height: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    display: block !important;
   }
 
-  /* Remove forced placement — let items flow naturally */
-  .gallery-item.portrait:nth-child(2n) {
-    grid-column: auto;
-  }
-
-  /* Ensure images keep aspect ratio */
   .gallery-item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
   }
 }
