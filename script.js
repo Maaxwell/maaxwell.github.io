@@ -17,7 +17,7 @@ if (menu) {
   });
 }
 
-// Helper: run fn immediately if DOM ready, otherwise on DOMContentLoaded
+// Helper: run fn when DOM is ready
 function runWhenReady(fn) {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', fn);
@@ -26,12 +26,12 @@ function runWhenReady(fn) {
   }
 }
 
-// GALLERY: populate gallery with photos and a minimal lightbox
+// GALLERY: thumbnails for grid, medium images for lightbox, soft deterrents
 runWhenReady(() => {
   const gallery = document.getElementById('gallery');
-  if (!gallery) return; // nothing to do if no gallery on the page
+  if (!gallery) return;
 
-  // Exact filenames in Photos/ (case-sensitive). Update this array to add/remove images.
+  // Update this array if you rename files. Use the same base filename in thumb/ and medium/
   const photoFiles = [
     'DSC07896.JPEG',
     'DSC07884.JPEG',
@@ -41,7 +41,7 @@ runWhenReady(() => {
     'DSC07890.JPEG'
   ];
 
-  // Create a simple lightbox overlay (hidden by default)
+  // create overlay/lightbox
   const overlay = document.createElement('div');
   overlay.id = 'lightbox-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);z-index:9999;padding:20px;';
@@ -51,73 +51,68 @@ runWhenReady(() => {
   overlay.appendChild(overlayImg);
   document.body.appendChild(overlay);
 
-  function openLightbox(src, alt) {
-    overlayImg.src = src;
+  // soft deterrents on overlay
+  overlayImg.addEventListener('contextmenu', e => e.preventDefault());
+  overlayImg.addEventListener('dragstart', e => e.preventDefault());
+
+  function openLightbox(mediumSrc, alt) {
+    overlayImg.src = mediumSrc;
     overlayImg.alt = alt || '';
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
-
   function closeLightbox() {
     overlay.style.display = 'none';
     overlayImg.src = '';
     document.body.style.overflow = '';
   }
-
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay || e.target === overlayImg) closeLightbox();
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-  // Utility to set orientation class after image loads
-  function setOrientationClass(container, img) {
-    const orientation = img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait';
-    container.classList.add(orientation);
-  }
-
-  // Build gallery items
+  // build grid using thumbnails, open medium in lightbox
   photoFiles.forEach(fileName => {
-    const srcPath = `Photos/${fileName}`; // must match repo exactly
+    const thumbPath = '/Photos/thumb/' + fileName.replace(/\.[^.]+$/, '.jpg');
+    const mediumPath = '/Photos/medium/' + fileName.replace(/\.[^.]+$/, '.jpg');
 
-    // container for item
     const item = document.createElement('div');
     item.className = 'gallery-item';
 
-    // image element
     const img = document.createElement('img');
     img.className = 'gallery-img';
     img.loading = 'lazy';
     img.decoding = 'async';
     img.alt = fileName.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
 
-    // click -> open lightbox with original source
-    img.addEventListener('click', () => openLightbox(srcPath, img.alt));
+    // soft deterrents on thumbnails
+    img.addEventListener('contextmenu', e => e.preventDefault());
+    img.addEventListener('dragstart', e => e.preventDefault());
+    img.addEventListener('mousedown', e => { if (e.button === 2) e.preventDefault(); });
 
-    // handle load / error
-    img.addEventListener('load', () => {
-      setOrientationClass(item, img);
-    });
-    img.addEventListener('error', () => {
-      console.warn('Failed to load image:', srcPath);
-      // show a lightweight placeholder so layout remains stable
-      item.classList.add('image-missing');
-      item.textContent = 'Image not found';
-    });
-
-    // set src after listeners to avoid missing events in some browsers
-    img.src = srcPath;
+    // clicking opens medium image
+    img.addEventListener('click', () => openLightbox(mediumPath, img.alt));
+    img.addEventListener('keypress', (e) => { if (e.key === 'Enter') openLightbox(mediumPath, img.alt); });
 
     item.appendChild(img);
     gallery.appendChild(item);
+
+    // set src after listeners are attached
+    img.src = thumbPath;
+
+    img.addEventListener('load', () => {
+      const orientation = img.naturalWidth >= img.naturalHeight ? 'landscape' : 'portrait';
+      item.classList.add(orientation);
+    });
+
+    img.addEventListener('error', () => {
+      item.classList.add('image-missing');
+      item.textContent = 'Image not found';
+    });
   });
 
-  // Accessibility: focus trap for overlay (basic)
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
-
-  // If you want a caption under images, you can add a <figcaption> here using the alt text.
 });
 
 // Smooth scroll behavior for in-page anchors
