@@ -17,52 +17,47 @@ if (menu) {
     });
 }
 
-// Load gallery images (only on home page)
-const gallery = document.getElementById('gallery');
+// GALLERY: load photos (run immediately)
+(function () {
+  const gallery = document.getElementById('gallery');
+  if (!gallery) return;
 
-if (gallery) {
-    // Function to detect if image is landscape or portrait
-    function getImageOrientation(img) {
-        return img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait';
-    }
+  // exact filenames (include extension) and use correct folder name (Photos)
+  const photoFiles = [
+    'DSC07896.JPEG',
+    'DSC07884.JPEG',
+    'DSC07872.JPEG',
+    'DSC07876.JPEG',
+    'DSC07922.JPEG',
+    'DSC07890.JPEG'
+  ];
 
-    // Load images from the 'photos' folder
-    async function loadPhotos() {
-        try {
-            // Fetch list of photos from the photos folder
-            const photoFiles = [
-                // 'DSC07896',
-                // 'DSC07884',
-                // 'DSC07872',
-                // 'DSC07876',
-                // 'DSC07922',
-            ];
+  function getImageOrientation(img) {
+    return img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait';
+  }
 
-            photoFiles.forEach(fileName => {
-                const img = new Image();
-                img.src = `Photos/${fileName}`;
-                
-                img.onload = () => {
-                    const item = document.createElement('div');
-                    const orientation = getImageOrientation(img);
-                    item.className = `gallery-item ${orientation}`;
-                    
-                    const imgElement = document.createElement('img');
-                    imgElement.src = `Photos/${fileName}`;
-                    imgElement.alt = 'Gallery photo';
-                    
-                    item.appendChild(imgElement);
-                    gallery.appendChild(item);
-                };
-            });
-        } catch (error) {
-            console.error('Error loading photos:', error);
-        }
-    }
+  photoFiles.forEach(fileName => {
+    const srcPath = `Photos/${fileName}`; // CORRECT: capital P + exact filename + extension
+    const img = new Image();
+    img.loading = 'lazy';
+    img.alt = fileName.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+    img.src = srcPath; // set src after alt/loading for clarity
 
-    // Load photos when page is ready
-    document.addEventListener('DOMContentLoaded', loadPhotos);
-}
+    img.onload = () => {
+      const item = document.createElement('div');
+      const orientation = getImageOrientation(img);
+      item.className = `gallery-item ${orientation}`;
+
+      // use the already-loaded image element to avoid re-downloading
+      item.appendChild(img);
+      gallery.appendChild(item);
+    };
+
+    img.onerror = () => {
+      console.warn('Failed to load image:', srcPath);
+    };
+  });
+})();
 
 // Smooth scroll behavior
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
