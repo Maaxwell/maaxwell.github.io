@@ -40,7 +40,7 @@ if (gallery) {
 
             photoFiles.forEach(fileName => {
                 const img = new Image();
-                img.src = `photos/${fileName}`;
+                img.src = `Photos/${fileName}`;
                 
                 img.onload = () => {
                     const item = document.createElement('div');
@@ -48,7 +48,7 @@ if (gallery) {
                     item.className = `gallery-item ${orientation}`;
                     
                     const imgElement = document.createElement('img');
-                    imgElement.src = `photos/${fileName}`;
+                    imgElement.src = `Photos/${fileName}`;
                     imgElement.alt = 'Gallery photo';
                     
                     item.appendChild(imgElement);
