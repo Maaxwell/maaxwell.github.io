@@ -241,7 +241,8 @@ html, body {
     align-items: start;
     grid-auto-rows: auto; /* allow varying row heights so images keep native aspect */
     width: auto;
-    max-width: calc(100% - (var(--sidebar-width) + 24px));
+    /* Use viewport-based calc so gallery fills the remaining viewport width beside the sidebar */
+    max-width: calc(100vw - var(--sidebar-width) - 8px);
   }
 
   .gallery-item {
