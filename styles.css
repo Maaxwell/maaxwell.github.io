@@ -1,3 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --sidebar-width: 250px;
+    --gap: 8px;
+}
+
+html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #fff;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* SIDEBAR/HEADER */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 16px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 16px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    min-width: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.menu.active {
+    display: block;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+.menu li {
+    border-bottom: 1px solid #eee;
+}
+
+.menu li:last-child {
+    border-bottom: none;
+}
+
+.menu a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #f5f5f5;
+}
+
+/* CONTENT AREA */
+.content {
+    width: 100%;
+    margin-top: 70px;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.gallery {
+    display: grid;
+    grid-auto-flow: dense;
+    gap: var(--gap);
+    width: 100%;
+}
+
+.gallery-item {
+    width: 100%;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Portrait images: 2 side by side */
+.gallery-item.portrait {
+    grid-column: 1;
+}
+
+/* Landscape images: full width */
+.gallery-item.landscape {
+    grid-column: 1;
+}
+
+/* MOBILE LAYOUT (default) */
+@media (max-width: 768px) {
+    :root {
+        --gap: 8px;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-item.landscape {
+        grid-column: 1 / -1;
+    }
+
+    .gallery-item.portrait {
+        grid-column: 1;
+    }
+}
+
+/* DESKTOP LAYOUT */
 /* DESKTOP LAYOUT — two columns, landscape side-by-side with controlled heights */
 @media (min-width: 769px) {
   .sidebar {
@@ -64,15 +229,34 @@
 
   /* Make sure main content clears the fixed sidebar */
   .content {
+    margin-left: calc(var(--sidebar-width) + 24px);
     margin-left: calc(var(--sidebar-width) + 24px); /* extra breathing room */
     margin-top: 0;
     padding: 40px;
   }
 
+  /* TWO-COLUMN GALLERY — fixed row height to avoid huge portrait tiles */
   /* TWO-COLUMN GALLERY: fixed row height to avoid huge portrait tiles */
   :root { --gap: 12px; }              /* adjust global gap if desired */
   .gallery {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-items: start;
+    grid-auto-rows: 320px; /* adjust tile height as desired */
+    width: auto;
+    max-width: calc(100% - (var(--sidebar-width) + 24px));
+  }
+
+  .gallery-item {
+    width: auto;           /* let grid column control the width */
+    min-width: 0;          /* allow item to shrink to column width */
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+  }
+
     gap: var(--gap);
     align-items: stretch;
     grid-auto-rows: 320px;            /* fixed tile height (adjust as desired) */
@@ -104,4 +288,48 @@
     object-fit: cover;
     display: block;
   }
+}
+
+/* Additional styles for contact and purchase pages */
+.page-content {
+    max-width: 800px;
+}
+
+.page-content h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.page-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    color: #666;
+}
+
+.contact-info,
+.purchase-info {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid #eee;
+}
+
+.contact-info p,
+.purchase-info p {
+    margin-bottom: 12px;
+}
+
+.contact-info a,
+.purchase-info a {
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+    transition: opacity 0.2s;
+}
+
+.contact-info a:hover,
+.purchase-info a:hover {
+    opacity: 0.7;
 }
