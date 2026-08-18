@@ -163,7 +163,6 @@ html, body {
 }
 
 /* DESKTOP LAYOUT */
-/* DESKTOP LAYOUT — two columns, landscape side-by-side with controlled heights */
 @media (min-width: 769px) {
   .sidebar {
     position: fixed;
@@ -229,21 +228,18 @@ html, body {
 
   /* Make sure main content clears the fixed sidebar */
   .content {
-    margin-left: calc(var(--sidebar-width) + 24px);
-    margin-left: calc(var(--sidebar-width) + 24px); /* extra breathing room */
+    margin-left: calc(var(--sidebar-width) + 24px) !important;
     margin-top: 0;
     padding: 40px;
   }
 
-  /* TWO-COLUMN GALLERY — fixed row height to avoid huge portrait tiles */
-  /* TWO-COLUMN GALLERY: fixed row height to avoid huge portrait tiles */
-  :root { --gap: 12px; }              /* adjust global gap if desired */
+  /* TWO-COLUMN GALLERY: allow images to keep native aspect ratios */
   .gallery {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     align-items: start;
-    grid-auto-rows: 320px; /* adjust tile height as desired */
+    grid-auto-rows: auto; /* allow varying row heights so images keep native aspect */
     width: auto;
     max-width: calc(100% - (var(--sidebar-width) + 24px));
   }
@@ -251,41 +247,25 @@ html, body {
   .gallery-item {
     width: auto;           /* let grid column control the width */
     min-width: 0;          /* allow item to shrink to column width */
-    height: 100%;
+    height: auto;          /* allow item height to follow image */
     overflow: hidden;
     box-sizing: border-box;
     display: block;
   }
 
-    gap: var(--gap);
-    align-items: stretch;
-    grid-auto-rows: 320px;            /* fixed tile height (adjust as desired) */
-    max-width: calc(100% - (var(--sidebar-width) + 24px));
-  }
-
-  /* Each gallery item fills its grid cell */
-  .gallery-item {
-    height: 100%;
-    overflow: hidden;
-    display: block;
-  }
-
-  /* Portrait and landscape both occupy a single column so they sit side-by-side */
   .gallery-item.landscape,
   .gallery-item.portrait {
     grid-column: auto;
   }
 
-  /* Let items flow naturally (no forced nth-child placement) */
   .gallery-item.portrait:nth-child(2n) {
     grid-column: auto;
   }
 
-  /* Images fill their tile and are cropped to fit (object-fit: cover) */
   .gallery-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;           /* preserve natural aspect ratio */
+    object-fit: unset;      /* not needed when height:auto */
     display: block;
   }
 }
