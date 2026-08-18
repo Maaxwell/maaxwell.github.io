@@ -162,26 +162,89 @@ html, body {
     }
 }
 
-/* DESKTOP LAYOUT (two-column gallery; landscape items full width) */
+/* DESKTOP LAYOUT */
 @media (min-width: 769px) {
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: var(--sidebar-width);
-    height: 100vh;
-    flex-direction: column;
-    border-bottom: none;
-    border-right: 1px solid #eee;
-    padding: 40px 24px;
-    overflow-y: auto;
-  }
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid #eee;
+        padding: 40px 24px;
+        overflow-y: auto;
+    }
 
-  .header-content {
-    flex-direction: column;
-    width: 100%;
-    align-items*
-
+    .header-content {
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .name {
+        font-size: 24px;
+        margin-bottom: 32px;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+
+    .menu {
+        position: static;
+        display: block;
+        background: none;
+        border: none;
+        box-shadow: none;
+        margin-top: 0;
+    }
+
+    .menu ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .menu li {
+        border-bottom: none;
+        margin-bottom: 8px;
+    }
+
+    .menu a {
+        padding: 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+        background: none;
+        color: #000;
+    }
+
+    .content {
+        margin-left: var(--sidebar-width);
+        margin-top: 0;
+        padding: 40px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery-item.landscape {
+        grid-column: 1 / -1;
+    }
+
+    .gallery-item.portrait {
+        grid-column: 1;
+    }
+
+    .gallery-item.portrait:nth-child(2n) {
+        grid-column: 2;
+    }
 }
 
 /* Additional styles for contact and purchase pages */
