@@ -1,4 +1,4 @@
-/* DESKTOP LAYOUT — two columns, landscape side-by-side */
+/* DESKTOP LAYOUT — two columns, landscape side-by-side with controlled heights */
 @media (min-width: 769px) {
   .sidebar {
     position: fixed;
@@ -11,6 +11,8 @@
     border-right: 1px solid #eee;
     padding: 40px 24px;
     overflow-y: auto;
+    z-index: 1000;
+    background: #fff;
   }
 
   .header-content {
@@ -60,35 +62,45 @@
     color: #000;
   }
 
+  /* Make sure main content clears the fixed sidebar */
   .content {
-    margin-left: var(--sidebar-width);
+    margin-left: calc(var(--sidebar-width) + 24px); /* extra breathing room */
     margin-top: 0;
     padding: 40px;
   }
 
-  /* TWO-COLUMN GALLERY */
+  /* TWO-COLUMN GALLERY: fixed row height to avoid huge portrait tiles */
   :root { --gap: 12px; }              /* adjust global gap if desired */
   .gallery {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--gap);
-    align-items: start;
+    align-items: stretch;
+    grid-auto-rows: 320px;            /* fixed tile height (adjust as desired) */
+    max-width: calc(100% - (var(--sidebar-width) + 24px));
   }
 
-  /* Make all items occupy a single column so they sit side-by-side */
+  /* Each gallery item fills its grid cell */
+  .gallery-item {
+    height: 100%;
+    overflow: hidden;
+    display: block;
+  }
+
+  /* Portrait and landscape both occupy a single column so they sit side-by-side */
   .gallery-item.landscape,
   .gallery-item.portrait {
     grid-column: auto;
   }
 
-  /* Remove forced placement — let items flow naturally */
+  /* Let items flow naturally (no forced nth-child placement) */
   .gallery-item.portrait:nth-child(2n) {
     grid-column: auto;
   }
 
-  /* Ensure images keep aspect ratio */
+  /* Images fill their tile and are cropped to fit (object-fit: cover) */
   .gallery-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
