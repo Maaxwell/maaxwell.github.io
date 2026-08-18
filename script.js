@@ -31,8 +31,11 @@ if (gallery) {
         try {
             // Fetch list of photos from the photos folder
             const photoFiles = [
-                // Add your photo filenames here in the format: 'photo-name.jpg'
-                // Example: 'photo-1.jpg', 'photo-2.jpg', etc.
+                // 'DSC07896',
+                // 'DSC07884',
+                // 'DSC07872',
+                // 'DSC07876',
+                // 'DSC07922',
             ];
 
             photoFiles.forEach(fileName => {
