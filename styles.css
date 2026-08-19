@@ -278,6 +278,7 @@ html, body {
     overflow-y: auto;
     z-index: 1000;
     background: #fff;
+    justify-content: flex-start; /* ensure children are pinned to top */
   }
 
   .header-content {
