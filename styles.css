@@ -515,12 +515,3 @@ html, body {
 .purchase-info a:hover {
     opacity: 0.7;
 }
-.contact-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; margin-top: 12px; align-items: start; }
-
-.contact-photos a { display: block; width: 100%; border: 1px solid #eee; border-radius: 4px; overflow: hidden; background: #fafafa; transition: box-shadow .15s, transform .15s; }
-
-.contact-photos img { width: 100%; height: 100%; display: block; object-fit: cover; }
-
-.contact-photos a:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-
-/* narrow screens */ @media (max-width: 480px) { .contact-photos { grid-template-columns: repeat(2, 1fr); } }
