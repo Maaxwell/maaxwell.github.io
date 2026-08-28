@@ -2,6 +2,13 @@
 
 Your photography portfolio website built with GitHub Pages.
 
+Updating code:
+1. Edit local 'in progress' files and test through VSCode.
+2. Back this up in 'in progress' branch on GitHub by opening the branch, press '.' and use the VSCode web to drag and drop changed files.
+3. When it is finalised and big free, replace local 'Live' folder with 'In progress' to keep up to date.
+4. Then, when ready to update website, make sure 'In progress' branch is up to date, then click 'Contribute' --> 'Open Pull Request' --> 'Create pull request' --> 'merge pull request' --> 'confirm request'
+5. Done! Make sure both local and github are up to date
+
 ## How to Add Photos
 
 1. **Create a `photos` folder** in your repository (if it doesn't exist)
