@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Print a Zine! - Max Conaghan</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="print-zine.css" />
 </head>
 <body>
     <div class="container">
@@ -28,33 +29,41 @@
         <!-- Main Content -->
         <main class="content page-content">
             <h2>Print a Zine!</h2>
-            <p>Choose a zine PDF below to download. If you'd like to support this project, use the Donate button next to each file (opens PayPal in a new tab).</p>
+            <p class="intro">Choose a zine PDF below to download. If you'd like to support this project, please use the Donate button.</p>
 
-            <div class="zine-list">
-                <div class="zine-item">
-                    <div class="zine-meta">
-                        <a href="assets/pdfs/zine-sample.pdf" download>Zine — Sample Issue (2 MB)</a>
-                    </div>
-                    <div class="zine-actions">
-                        <a class="btn" href="assets/pdfs/zine-sample.pdf" download>Download</a>
-                        <!-- Replace the PayPal link below with your PayPal.Me or hosted button URL -->
-                        <a class="btn donate" href="https://www.paypal.com/paypalme/maxconaghan" target="_blank" rel="noopener">Donate</a>
-                    </div>
-                </div>
-
-                <div class="zine-item">
-                    <div class="zine-meta">
-                        <a href="assets/pdfs/zine-issue-1.pdf" download>Zine — Issue 1 (4 MB)</a>
-                    </div>
-                    <div class="zine-actions">
-                        <a class="btn" href="assets/pdfs/zine-issue-1.pdf" download>Download</a>
-                        <a class="btn donate" href="https://paypal.me/YourPayPalMe/3" target="_blank" rel="noopener">Donate $3</a>
-                    </div>
-                </div>
-
+            <!-- Centered Donate button (site-wide) -->
+            <div class="donate-center">
+                <a class="btn donate" href="https://www.paypal.com/paypalme/maxconaghan" target="_blank" rel="noopener">Donate</a>
             </div>
 
-            <p class="note">Notes: Put your PDF files in <code>assets/pdfs/</code>. If you want, tell me the exact PayPal link and I will update the buttons for you. Large files (&gt;100MB) shouldn't be stored in the repo — use external hosting and link here instead.</p>
+            <!-- Grid of zine previews -->
+            <div class="zine-grid">
+                <div class="zine-card">
+                    <img class="thumb" src="assets/pdfs/entropy-2026-06-10.png" alt="Entropy preview" />
+                    <div class="zine-title">Entropy (2026-06-10)</div>
+                    <a class="btn download" href="assets/pdfs/entropy-2026-06-10.pdf" download>Download</a>
+                </div>
+
+                <div class="zine-card">
+                    <img class="thumb" src="assets/pdfs/kae-2026-06-04.png" alt="KAE preview" />
+                    <div class="zine-title">KAE (2026-06-04)</div>
+                    <a class="btn download" href="assets/pdfs/kae-2026-06-04.pdf" download>Download</a>
+                </div>
+
+                <div class="zine-card">
+                    <img class="thumb" src="assets/pdfs/max-at-large-2026-06-04.png" alt="Max at Large preview" />
+                    <div class="zine-title">Max at Large (2026-06-04)</div>
+                    <a class="btn download" href="assets/pdfs/max-at-large-2026-06-04.pdf" download>Download</a>
+                </div>
+
+                <div class="zine-card">
+                    <img class="thumb" src="assets/pdfs/tectonic-shifts-2026-06-04.png" alt="Tectonic Shifts preview" />
+                    <div class="zine-title">Tectonic Shifts (2026-06-04)</div>
+                    <a class="btn download" href="assets/pdfs/tectonic-shifts-2026-06-04.pdf" download>Download</a>
+                </div>
+            </div>
+
+            <p class="note">Notes: Thumbnails are the PNGs you uploaded and are displayed here. If you want the thumbnail to open the PDF in a new tab instead of a Download button, or want different titles, tell me and I’ll update it. Large PDFs (>100MB) are not recommended in the repo.</p>
         </main>
     </div>
 
